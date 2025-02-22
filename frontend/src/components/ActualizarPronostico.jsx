@@ -11,7 +11,7 @@ const ActualizarPronostico = ({ token, pronosticos }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ estado: estados[id] }), // Enviamos el estado actualizado para ese pronóstico
+        body: JSON.stringify({ estado: estados[id] }),
       });
 
       if (response.ok) {
@@ -41,7 +41,7 @@ const ActualizarPronostico = ({ token, pronosticos }) => {
             <p>{p.fecha}</p>
             <select
               className="form-select"
-              value={estados[p.id] || ''} // Asegúrate de que el estado se maneje correctamente
+              value={estados[p.id] || ''}
               onChange={(e) => handleEstadoChange(p.id, e.target.value)}
             >
               <option value="">Seleccionar Estado</option>

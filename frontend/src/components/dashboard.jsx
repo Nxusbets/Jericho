@@ -10,10 +10,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     const rol = localStorage.getItem('rol');
+    console.log("Rol obtenido del localStorage:", rol); // Verifica el rol
     if (rol === 'admin') {
       setIsAdmin(true);
+      console.log("isAdmin:", true); // Verifica isAdmin
 
-      // Obtener los pronósticos desde la API
       const fetchPronosticos = async () => {
         const token = localStorage.getItem('token');
         const response = await fetch('https://potential-space-spork-v6pxg47j7pj62x4w7-5000.app.github.dev/api/pronosticos', {
@@ -22,12 +23,14 @@ const Dashboard = () => {
           },
         });
         const data = await response.json();
-        setPronosticos(data); // Guardar los pronósticos en el estado
+        setPronosticos(data);
       };
 
       fetchPronosticos();
     } else {
-      navigate('/'); // Redirigir si no es admin
+      setIsAdmin(false);
+      console.log("isAdmin:", false); // Verifica isAdmin
+      navigate('/');
     }
   }, [navigate]);
 
@@ -40,7 +43,7 @@ const Dashboard = () => {
             <h3>Gestión de pronósticos</h3>
             <AgregarPronostico token={localStorage.getItem('token')} />
             {pronosticos.length > 0 ? (
-            <ActualizarPronostico token={localStorage.getItem('token')} pronosticos={pronosticos} />
+              <ActualizarPronostico token={localStorage.getItem('token')} pronosticos={pronosticos} />
             ) : (
               <p>No hay pronósticos para actualizar.</p>
             )}

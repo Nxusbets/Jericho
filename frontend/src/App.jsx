@@ -1,4 +1,3 @@
-// Componente App
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,8 +5,10 @@ import Navbar from './components/navbar';
 import Jumbotron from './components/Jumbotron';
 import Login from './components/Login';
 import Register from './components/Register';
-import AgregarPronostico from './components/AgregarPronostico';
+import Dashboard from './components/dashboard';
 import { jwtDecode } from 'jwt-decode';
+import RedesSociales from './components/Redessociales';
+import ListaPronosticos from './components/ListaPronosticos';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
@@ -41,7 +42,6 @@ function App() {
   return (
     <Router>
       <div className="container">
-        {/* Pasamos el token, rol y usuario al Navbar */}
         <Navbar token={token} rol={rol} user={user} handleLogout={handleLogout} />
         <Routes>
           <Route path="/" element={!token ? <Login setToken={setToken} setRol={setRol} /> : <Navigate to="/dashboard" />} />
@@ -51,18 +51,27 @@ function App() {
             element={
               token ? (
                 <div>
-                  <h3>Bienvenido {user?.username}</h3>
-                  <Jumbotron token={token} />
-                  
-                  {/* Si el rol es admin, mostramos la opción de agregar pronóstico */}
-                  {rol === 'admin' && <AgregarPronostico token={token} />}
+                  <h4>Bienvenido {user?.username}</h4>
+                  <Jumbotron token={token} isAdmin={rol === "admin"} />
+                  {rol === 'admin' && <Dashboard />}
                 </div>
               ) : (
                 <Navigate to="/" />
               )
             }
           />
+          <Route
+            path="/pronosticos"
+            element={
+              token ? (
+                <ListaPronosticos token={token} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
         </Routes>
+        <RedesSociales />
       </div>
     </Router>
   );

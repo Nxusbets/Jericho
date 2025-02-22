@@ -37,46 +37,62 @@ const AgregarPronostico = ({ token }) => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Agregar Pronóstico</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="container mt-5" style={{ fontFamily: "Arial Narrow, sans-serif" }}>
+      <h2 className="text-center mb-4" style={{ color: "#FFC107" }}>Agregar Pronóstico</h2>
+      <form onSubmit={handleSubmit} className="shadow p-4 rounded" style={{ backgroundColor: "#f9f9f9" }}>
         <div className="mb-3">
-          <label className="form-label">Equipo Local</label>
+          <label className="form-label" style={{ color: "#000" }}>Equipo Local</label>
           <input
             type="text"
             className="form-control"
             value={equipoLocal}
             onChange={(e) => setEquipoLocal(e.target.value)}
+            style={{ borderColor: "#FFC107" }}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Equipo Visitante</label>
+          <label className="form-label" style={{ color: "#000" }}>Equipo Visitante</label>
           <input
             type="text"
             className="form-control"
             value={equipoVisitante}
             onChange={(e) => setEquipoVisitante(e.target.value)}
+            style={{ borderColor: "#FFC107" }}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Fecha</label>
+          <label className="form-label" style={{ color: "#000" }}>Fecha</label>
           <input
             type="date"
             className="form-control"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
+            style={{ borderColor: "#FFC107" }}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Pronóstico</label>
+          <label className="form-label" style={{ color: "#000" }}>Pronóstico</label>
           <input
             type="text"
             className="form-control"
             value={pronostico}
             onChange={(e) => setPronostico(e.target.value)}
+            style={{ borderColor: "#FFC107" }}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className="btn btn-primary w-100 mt-3"
+          style={{
+            backgroundColor: "#FFC107",
+            borderColor: "#FFC107",
+            color: "#000",
+            fontWeight: "bold",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#e0a800")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#FFC107")}
+        >
           Agregar Pronóstico
         </button>
       </form>
