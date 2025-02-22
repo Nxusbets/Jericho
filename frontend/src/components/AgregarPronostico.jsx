@@ -5,6 +5,7 @@ const AgregarPronostico = ({ token }) => {
   const [equipoVisitante, setEquipoVisitante] = useState("");
   const [fecha, setFecha] = useState("");
   const [pronostico, setPronostico] = useState("");
+  const [momio, setMomio] = useState(""); // Nuevo estado para el momio
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ const AgregarPronostico = ({ token }) => {
       equipoVisitante,
       fecha,
       pronostico,
+      momio: parseFloat(momio), // Convierte el momio a un número flotante
     };
 
     try {
@@ -77,6 +79,17 @@ const AgregarPronostico = ({ token }) => {
             className="form-control"
             value={pronostico}
             onChange={(e) => setPronostico(e.target.value)}
+            style={{ borderColor: "#FFC107" }}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label" style={{ color: "#000" }}>Momio</label>
+          <input
+            type="number"
+            step="0.01"
+            className="form-control"
+            value={momio}
+            onChange={(e) => setMomio(e.target.value)}
             style={{ borderColor: "#FFC107" }}
           />
         </div>

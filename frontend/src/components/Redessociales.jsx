@@ -24,7 +24,7 @@ const RedesSociales = () => {
             <div className="card-body text-center">
               {/* Imagen cuadrada de tu proyecto */}
               <img
-                src="https://placekitten.com/300/300" // Reemplaza con la URL de tu imagen
+                src="https://scontent.fgdl1-3.fna.fbcdn.net/v/t39.30808-6/312946950_549749867153095_3312783491462080800_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Rkjl4mDDl08Q7kNvgEF2vvw&_nc_oc=Adg_jcAulgzLo6SRibgQ3TyPickl6WKX829J_y8mwzLcTPLTxYuRmayprHPLxAWYGbWR-BqxCeaaW8lOYPClTyI7&_nc_zt=23&_nc_ht=scontent.fgdl1-3.fna&_nc_gid=AMpX7suVkZsNJu7Nm7xdQLi&oh=00_AYDJfqi8Nc5m6DOEVm5HxtXkiHh4Fs6rscT6rjc9YrLTgw&oe=67C02602" // Reemplaza con la URL de tu imagen
                 alt="Proyecto"
                 className="img-fluid rounded-circle mb-3"
                 style={{ maxWidth: "200px", height: "200px" }}

@@ -50,10 +50,29 @@ const Jumbotron = ({ token, isAdmin }) => {
       }
 
       setPronosticos((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, estado: nuevoEstado } : p))
+        prev.map((p) => (p._id === id ? { ...p, estado: nuevoEstado } : p))
       );
     } catch (error) {
       console.error("Error al actualizar estado:", error);
+    }
+  };
+
+  const eliminarPronostico = async (id) => {
+    try {
+      const response = await fetch(`https://potential-space-spork-v6pxg47j7pj62x4w7-5000.app.github.dev/api/pronosticos/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("No se pudo eliminar el pronóstico.");
+      }
+
+      setPronosticos((prev) => prev.filter((p) => p._id !== id));
+    } catch (error) {
+      console.error("Error al eliminar pronóstico:", error);
     }
   };
 
@@ -66,7 +85,7 @@ const Jumbotron = ({ token, isAdmin }) => {
   return (
     <motion.div
       className="jumbotron text-center p-5 shadow-lg rounded"
-      style={{ backgroundColor: "#FFC107", color: "#000000", fontFamily: 'Arial Narrow' }} // Added font family here
+      style={{ backgroundColor: "#FFC107", color: "#000000", fontFamily: 'Arial Narrow' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -93,7 +112,7 @@ const Jumbotron = ({ token, isAdmin }) => {
           ) : (
             pronosticos.map((p) => (
               <motion.li
-                key={p.id}
+                key={p._id}
                 className="list-group-item d-flex justify-content-between align-items-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -105,9 +124,10 @@ const Jumbotron = ({ token, isAdmin }) => {
                 </div>
                 {isAdmin && (
                   <div>
-                    <button className="btn btn-success btn-sm mx-1" onClick={() => actualizarEstado(p.id, "Ganado")}>Ganado</button>
-                    <button className="btn btn-danger btn-sm mx-1" onClick={() => actualizarEstado(p.id, "Perdido")}>Perdido</button>
-                    <button className="btn btn-warning btn-sm mx-1" onClick={() => actualizarEstado(p.id, "Reembolsado")}>Reembolsado</button>
+                    <button className="btn btn-success btn-sm mx-1" onClick={() => actualizarEstado(p._id, "Ganado")}>Ganado</button>
+                    <button className="btn btn-danger btn-sm mx-1" onClick={() => actualizarEstado(p._id, "Perdido")}>Perdido</button>
+                    <button className="btn btn-warning btn-sm mx-1" onClick={() => actualizarEstado(p._id, "Reembolsado")}>Reembolsado</button>
+                    <button className="btn btn-danger btn-sm mx-1" onClick={() => eliminarPronostico(p._id)}>Eliminar</button>
                   </div>
                 )}
               </motion.li>
@@ -118,6 +138,7 @@ const Jumbotron = ({ token, isAdmin }) => {
 
       <div className="record mt-4">
         <h3>📊 Récord de Pronósticos</h3>
+        
         <p><span className="badge bg-success">Ganados: {record.ganado}</span></p>
         <p><span className="badge bg-danger">Perdidos: {record.perdido}</span></p>
         <p><span className="badge bg-primary text-white">Reembolsados: {record.reembolsado}</span></p>
