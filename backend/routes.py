@@ -99,32 +99,4 @@ def setup_routes(app, db):
         rutas = [str(rule) for rule in app.url_map.iter_rules()]
         return jsonify(rutas)
 
-    # Chatbot endpoints.
-    @app.route('/api/chatbot/pronostico', methods=['POST'])
-    def obtener_pronostico():
-        data = request.get_json()
-        partido = data.get('partido')
-        pronostico = obtener_pronostico_de_api(partido)
-        if pronostico:
-            return jsonify({"pronostico": pronostico})
-        else:
-            return jsonify({"pronostico": "No hay pronóstico disponible"}), 404
-
-    def obtener_pronostico_de_api(partido):
-        try:
-            api_key = "88422437a61b4453ab6d435af42cae30"
-            headers = {"X-Auth-Token": api_key}
-            response = requests.get("http://api.football-data.org/v4/matches", headers=headers)
-            if response.status_code == 200:
-                matches = response.json().get("matches", [])
-                for match in matches:
-                    local = match["homeTeam"]["name"]
-                    visitante = match["awayTeam"]["name"]
-                    if partido.lower() == f"{local} vs {visitante}".lower():
-                        return f"Pronóstico: {local} podría ganar."
-                return None
-            else:
-                return None
-        except Exception as e:
-            print(f"Error al obtener pronóstico: {e}")
-            return None
+   
