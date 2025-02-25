@@ -1,0 +1,11 @@
+machine api.heroku.com
+	login jericho8888@gmail.com
+	password:HRKU-8451723f-e555-48c3-aee9-f130f9c09ee3
+machine git.heroku.com
+	login jericho888873@gmail.com
+	password:HRKU-8451723f-e555-48c3-aee9-f130f9c09ee3
+
+cd '/workspaces/Jericho/backend'
+
+cd '/workspaces/Jericho'
+
