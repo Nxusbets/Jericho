@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Arial Narrow', sans-serif;
+}
+
+.app-container {
+    background-color: black;
+    color: white;
+    font-family: 'Arial Narrow', sans-serif;
+    max-width: 1500px;
+    /* Ajusta este valor según tus preferencias */
+    margin: 0 auto;
+    /* Centra el contenedor horizontalmente */
+    padding: 0 20px;
+    /* Agrega un poco de espacio a los lados */
+}

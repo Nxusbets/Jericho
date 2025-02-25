@@ -7,11 +7,11 @@ const MyNavbar = ({ token, rol, user, handleLogout }) => {
     <Navbar expand="lg" style={{ backgroundColor: 'yellow', fontFamily: 'Arial Narrow' }}>
       <Container>
         <Navbar.Brand as={Link} to="/">Inicio</Navbar.Brand>
-        <Nav.Link as={Link} to="/">Youtube</Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            
+            <Nav.Link href="https://www.youtube.com/@nxusbets" target="_blank" rel="noopener noreferrer">Youtube</Nav.Link>
             {token && rol === 'admin' && (
               <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
             )}
@@ -29,6 +29,7 @@ const MyNavbar = ({ token, rol, user, handleLogout }) => {
             ) : (
               <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
             )}
+           
           </Nav>
         </Navbar.Collapse>
       </Container>

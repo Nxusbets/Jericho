@@ -9,6 +9,8 @@ import Dashboard from './components/dashboard';
 import { jwtDecode } from 'jwt-decode';
 import RedesSociales from './components/Redessociales';
 import ListaPronosticos from './components/ListaPronosticos';
+import './App.css';
+import Footer from './components/Footer';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
@@ -41,7 +43,7 @@ function App() {
 
   return (
     <Router>
-      <div className="container">
+      <div className="app-container">
         <Navbar token={token} rol={rol} user={user} handleLogout={handleLogout} />
         <Routes>
           <Route path="/" element={!token ? <Login setToken={setToken} setRol={setRol} /> : <Navigate to="/dashboard" />} />
@@ -51,7 +53,7 @@ function App() {
             element={
               token ? (
                 <div>
-                  <h4>Bienvenido {user?.username}</h4>
+                  <h5>Bienvenido {user?.username}</h5>
                   <Jumbotron token={token} isAdmin={rol === "admin"} />
                   {rol === 'admin' && <Dashboard />}
                 </div>
@@ -72,6 +74,8 @@ function App() {
           />
         </Routes>
         <RedesSociales />
+
+        <Footer />
       </div>
     </Router>
   );

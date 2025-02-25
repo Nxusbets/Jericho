@@ -46,57 +46,48 @@ def setup_routes(app, db):  # Acepta la instancia de la base de datos 'db'
 
     @app.route('/api/pronosticos', methods=['GET'])
     def obtener_pronosticos():
-        pronosticos = list(db.pronosticos.find())
-        # Serializa ObjectId correctamente
-        for pronostico in pronosticos:
-            pronostico['_id'] = str(pronostico['_id'])
-        return jsonify(pronosticos)
+        try:
+            pronosticos = list(db.pronosticos.find())
+            # Serializa ObjectId correctamente
+            for pronostico in pronosticos:
+                pronostico['_id'] = str(pronostico['_id'])
+            return jsonify(pronosticos)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @app.route('/api/pronosticos', methods=['POST'])
-    @jwt_required()
     def agregar_pronostico():
-        current_user = get_jwt_identity()
-        user = db.usuarios.find_one({"usuario": current_user})
-        if user and user.get("usuario") == "admin": # Verificando que el usuario sea admin desde la base de datos.
-            nuevo_pronostico = request.get_json()
+        nuevo_pronostico = request.get_json()
+        try:
             db.pronosticos.insert_one(nuevo_pronostico)
             return jsonify(nuevo_pronostico), 201
-        else:
-            return jsonify({"message": "No autorizado"}), 403
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-    @app.route('/api/pronosticos/<string:id>', methods=['PUT']) # Cambiado a string para manejar ObjectId
-    @jwt_required()
+    @app.route('/api/pronosticos/<string:id>', methods=['PUT'])  # Cambiado a string para manejar ObjectId
     def modificar_pronostico(id):
-        current_user = get_jwt_identity()
-        user = db.usuarios.find_one({"usuario": current_user})
-        if user and user.get("usuario") == "admin":
-            pronostico_actualizado = request.get_json()
-            try:
-                db.pronosticos.update_one({"_id": ObjectId(id)}, {"$set": pronostico_actualizado})
-                return jsonify(pronostico_actualizado)
-            except Exception as e:
-                return jsonify({"message": "Pronóstico no encontrado o ID inválido"}), 404
-        else:
-            return jsonify({"message": "No autorizado"}), 403
+        pronostico_actualizado = request.get_json()
+        try:
+            db.pronosticos.update_one({"_id": ObjectId(id)}, {"$set": pronostico_actualizado})
+            return jsonify(pronostico_actualizado)
+        except Exception as e:
+            return jsonify({"message": "Pronóstico no encontrado o ID inválido"}), 404
 
-    @app.route('/api/pronosticos/<string:id>', methods=['DELETE']) # Cambiado a string para manejar ObjectId
-    @jwt_required()
+    @app.route('/api/pronosticos/<string:id>', methods=['DELETE'])  # Cambiado a string para manejar ObjectId
     def borrar_pronostico(id):
-        current_user = get_jwt_identity()
-        user = db.usuarios.find_one({"usuario": current_user})
-        if user and user.get("usuario") == "admin":
-            try:
-                db.pronosticos.delete_one({"_id": ObjectId(id)})
-                return jsonify({"message": "Pronóstico eliminado"})
-            except Exception as e:
-                return jsonify({"message": "Pronóstico no encontrado o ID inválido"}), 404
-        else:
-            return jsonify({"message": "No autorizado"}), 403
+        try:
+            db.pronosticos.delete_one({"_id": ObjectId(id)})
+            return jsonify({"message": "Pronóstico eliminado"})
+        except Exception as e:
+            return jsonify({"message": "Pronóstico no encontrado o ID inválido"}), 404
 
     @app.route('/api/usuarios', methods=['GET'])
     def obtener_usuarios():
-        usuarios_sin_contrasena = [{"usuario": u["usuario"], "correo": u["correo"]} for u in db.usuarios.find()]
-        return jsonify(usuarios_sin_contrasena), 200
+        try:
+            usuarios_sin_contrasena = [{"usuario": u["usuario"], "correo": u["correo"]} for u in db.usuarios.find()]
+            return jsonify(usuarios_sin_contrasena), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @app.route('/api/rutas', methods=['GET'])
     def listar_rutas():
