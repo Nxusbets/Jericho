@@ -4,11 +4,8 @@
     { "src": "backend/routes.py", "use": "@vercel/python" },
     { "src": "frontend/dist", "use": "@vercel/static" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "backend/routes.py" },
-    { "src": "/(.*)", "dest": "frontend/dist/index.html" }
-  ],
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/backend/routes.py" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
