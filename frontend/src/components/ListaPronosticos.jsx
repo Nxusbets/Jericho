@@ -82,7 +82,7 @@ const ListaPronosticos = ({ token }) => {
     useEffect(() => {
         const fetchPronosticos = async () => {
             try {
-                const response = await fetch("https://potential-space-spork-v6pxg47j7pj62x4w7-5000.app.github.dev/api/pronosticos", {
+                const response = await fetch("/api/pronosticos", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
