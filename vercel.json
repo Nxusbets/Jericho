@@ -8,3 +8,7 @@
     { "src": "/api/(.*)", "dest": "backend/routes.py" },
     { "src": "/(.*)", "dest": "frontend/dist/index.html" }
   ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
