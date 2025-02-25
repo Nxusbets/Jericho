@@ -68,7 +68,7 @@ const GraficaGanancias = ({ datos }) => {
         height: 300,
     };
 
-    return <div style={{width:'80%', margin:'0 auto'}}><Line data={data} options={options} /></div>;
+    return <div style={{ width: '80%', margin: '0 auto' }}><Line data={data} options={options} /></div>;
 };
 
 const ListaPronosticos = ({ token }) => {
@@ -143,7 +143,7 @@ const ListaPronosticos = ({ token }) => {
             <p>Ganancias/Pérdidas Totales: {ganancias.toFixed(2)} MXN</p>
             <ul className="list-group">
                 {currentPronosticos.map((pronostico) => (
-                    <li key={pronostico.id} className="list-group-item d-flex justify-content-between align-items-center">
+                    <li key={pronostico._id} className="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <strong>{pronostico.equipoLocal} vs {pronostico.equipoVisitante}</strong> - {pronostico.fecha}
                             <br />

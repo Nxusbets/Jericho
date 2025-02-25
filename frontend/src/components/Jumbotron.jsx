@@ -48,11 +48,47 @@ const Jumbotron = ({ token, isAdmin }) => {
     }, [token]);
 
     const actualizarEstado = async (id, nuevoEstado) => {
-        // ... (tu código para actualizar el estado)
+        try {
+            const response = await fetch(`https://potential-space-spork-v6pxg47j7pj62x4w7-5000.app.github.dev/api/pronosticos/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ estado: nuevoEstado }),
+            });
+
+            if (response.ok) {
+                setPronosticos(prevPronosticos => prevPronosticos.map(p => p._id === id ? { ...p, estado: nuevoEstado } : p));
+                alert("Estado actualizado correctamente.");
+            } else {
+                alert("Error al actualizar el estado.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al actualizar el estado.");
+        }
     };
 
     const eliminarPronostico = async (id) => {
-        // ... (tu código para eliminar el pronóstico)
+        try {
+            const response = await fetch(`https://potential-space-spork-v6pxg47j7pj62x4w7-5000.app.github.dev/api/pronosticos/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                setPronosticos(prevPronosticos => prevPronosticos.filter(p => p._id !== id));
+                alert("Pronóstico eliminado correctamente.");
+            } else {
+                alert("Error al eliminar el pronóstico.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al eliminar el pronóstico.");
+        }
     };
 
     const record = {
@@ -79,9 +115,8 @@ const Jumbotron = ({ token, isAdmin }) => {
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 0.5, repeat: Infinity, repeatType: "loop" }}
             >
-                🔥 Pronósticos Gratuitos 🔥
+                 Pronósticos Gratuitos 
             </motion.h3>
-        
 
             {loading ? (
                 <p>Cargando pronósticos...</p>
@@ -119,12 +154,14 @@ const Jumbotron = ({ token, isAdmin }) => {
                 </ul>
             )}
 
-            <div className="record mt-2">
-                <h5 className="mb-3">📊 Récord de Pronósticos</h5>
-                <p><span className="badge bg-success rounded-pill">Ganados: {record.ganado}</span></p>
-                <p><span className="badge bg-danger rounded-pill">Perdidos: {record.perdido}</span></p>
-                <p><span className="badge bg-primary text-white rounded-pill">Reembolsados: {record.reembolsado}</span></p>
-            </div>
+            {pronosticos.length > 0 && (
+                <div className="record mt-2">
+                    <h5 className="mb-3"> Récord de Pronósticos</h5>
+                    <p><span className="badge bg-success rounded-pill">Ganados: {record.ganado}</span></p>
+                    <p><span className="badge bg-danger rounded-pill">Perdidos: {record.perdido}</span></p>
+                    <p><span className="badge bg-primary text-white rounded-pill">Reembolsados: {record.reembolsado}</span></p>
+                </div>
+            )}
 
             <div className="mt-2 ">
                 <h4>Quieres tener los pronósticos premium?</h4>

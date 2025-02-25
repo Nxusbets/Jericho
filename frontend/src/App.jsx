@@ -12,6 +12,7 @@ import ListaPronosticos from './components/ListaPronosticos';
 import './App.css';
 import Footer from './components/Footer';
 
+
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [rol, setRol] = useState(localStorage.getItem("rol") || null);
@@ -74,6 +75,7 @@ function App() {
           />
         </Routes>
         <RedesSociales />
+        
 
         <Footer />
       </div>
